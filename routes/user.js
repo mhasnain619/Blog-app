@@ -9,10 +9,16 @@ router.get('/signup', (req, res) => {
     return res.render('signup')
 })
 router.post('/signup', async (req, res) => {
-
-    const { fullName, email, password } = req.body
-    await User.create({ fullName, email, password })
-    return res.redirect('/')
+    try {
+        const { fullName, email, password } = req.body
+        debugger
+        await User.create({ fullName, email, password })
+        return res.redirect('/')
+    } catch (error) {
+        console.error('Error during signup:', error)
+        // You can handle the error more gracefully here.
+        return res.status(500).send('An error occurred during signup.')
+    }
 })
 
 
